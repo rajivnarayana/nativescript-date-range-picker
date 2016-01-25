@@ -1,0 +1,34 @@
+{
+  "name": "nativescript-date-range-picker",
+  "version": "0.1.0",
+  "description": "A nativescript date range picker that uses DSLCalendarView control for ios.",
+  "main": "dsl-calendarview.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajivnarayana/nativescript-dslcalendarview.git"
+  },
+  "keywords": [
+    "{N}",
+    "Nativescript",
+    "DSLCalendarView",
+    "calendar",
+    "range"
+  ],
+  "author": "Rajiv Narayana <rajivnarayana@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rajivnarayana/nativescript-dslcalendarview/issues"
+  },
+  "homepage": "https://github.com/rajivnarayana/nativescript-dslcalendarview#readme",
+  "devDependencies": {
+    "tns-core-modules": "^1.5.1"
+  },
+  "nativescript": {
+    "platforms": {
+      "ios": "1.0.0"
+    }
+  }
+}

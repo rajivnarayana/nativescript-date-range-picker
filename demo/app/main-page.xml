@@ -1,0 +1,5 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" xmlns:tools="nativescript-date-range-picker">
+  <StackLayout>
+    <tools:DateRangePicker loaded="onDateRangePickerLoaded" draggedTo="onUserDraggedTo" textColor="#AA0000" selectionColor="#0000AA" />
+  </StackLayout>
+</Page>
