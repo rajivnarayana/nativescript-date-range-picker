@@ -1,6 +1,6 @@
 {
   "name": "nativescript-date-range-picker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A nativescript date range picker that uses DSLCalendarView control for ios.",
   "main": "dsl-calendarview.js",
   "scripts": {
