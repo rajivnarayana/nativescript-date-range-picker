@@ -1,6 +1,16 @@
 let dateRangePickerModule = require("nativescript-date-range-picker");
 let observableModule = require("data/observable");
 
+let viewModel = new observableModule.Observable();
+function onPageLoaded(args) {
+    var page = args.object;
+    viewModel.set("startDate", new Date());
+    var futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + 2);
+    viewModel.set("endDate", futureDate);
+    page.bindingContext = viewModel;
+}
+
 function onDateRangePickerLoaded(args) {
     let dateRangePicker = args.object;
     dateRangePicker.on(observableModule.Observable.propertyChangeEvent, function(propertyChangeData) {
@@ -9,10 +19,20 @@ function onDateRangePickerLoaded(args) {
         } else if (propertyChangeData.propertyName == dateRangePickerModule.DateRangePicker.endDateProperty.name) {
             console.log("End change is : "+ propertyChangeData.value);
         }
+        
+        viewModel.set("formattedDateRange" , getDisplay(viewModel.get('startDate'))+ " - " + getDisplay(viewModel.get('endDate')));
+        // console.log("ViewModel: " + viewModel.get('startDate'));
     }, this);
+}
+
+function getDisplay(date) {
+    let iosDate = NSDate.dateWithTimeIntervalSince1970(date.getTime() / 1000.0);
+    return NSDateFormatter.localizedStringFromDateDateStyleTimeStyle(iosDate, NSDateFormatterShortStyle, NSDateFormatterShortStyle);
 }
 
 exports.onDateRangePickerLoaded = onDateRangePickerLoaded;
 exports.onUserDraggedTo = function(eventData) {
     console.log(eventData.dayView);
 }
+
+exports.pageLoaded = onPageLoaded; 
