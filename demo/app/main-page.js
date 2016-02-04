@@ -1,7 +1,8 @@
 let dateRangePickerModule = require("nativescript-date-range-picker");
 let observableModule = require("data/observable");
 
-let viewModel = new observableModule.Observable();
+var viewModel = new observableModule.Observable();
+
 function onPageLoaded(args) {
     var page = args.object;
     viewModel.set("startDate", new Date());
@@ -9,19 +10,22 @@ function onPageLoaded(args) {
     futureDate.setDate(futureDate.getDate() + 2);
     viewModel.set("endDate", futureDate);
     page.bindingContext = viewModel;
+    viewModel.on(observableModule.Observable.propertyChangeEvent, function(propertyChangeData) {
+        if (propertyChangeData.propertyName == "endDate") {
+            viewModel.set("formattedDateRange" , getDisplay(viewModel.get('startDate'))+ " - " + getDisplay(viewModel.get('endDate')));
+            console.log("ViewModel: " + viewModel.get('endDate'));
+        }
+    });
 }
 
 function onDateRangePickerLoaded(args) {
     let dateRangePicker = args.object;
     dateRangePicker.on(observableModule.Observable.propertyChangeEvent, function(propertyChangeData) {
         if (propertyChangeData.propertyName == dateRangePickerModule.DateRangePicker.startDateProperty.name) {
-            console.log("Start change is : "+ propertyChangeData.value);   
+            // console.log("Start change is : "+ propertyChangeData.value);   
         } else if (propertyChangeData.propertyName == dateRangePickerModule.DateRangePicker.endDateProperty.name) {
             console.log("End change is : "+ propertyChangeData.value);
-        }
-        
-        viewModel.set("formattedDateRange" , getDisplay(viewModel.get('startDate'))+ " - " + getDisplay(viewModel.get('endDate')));
-        // console.log("ViewModel: " + viewModel.get('startDate'));
+        }        
     }, this);
 }
 
