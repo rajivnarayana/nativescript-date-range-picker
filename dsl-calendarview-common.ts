@@ -1,16 +1,40 @@
 import { View } from "ui/core/view";
 import { DateRangePicker as DateRangePickerDefinition } from "nativescript-date-range-picker";
-import { Property, PropertyMetadataSettings } from "ui/core/dependency-observable";
+import { Property, PropertyMetadataSettings, PropertyChangeData } from "ui/core/dependency-observable";
 import { Color } from "color";
 import { converters } from "ui/styling";
 import { PropertyMetadata } from "ui/core/proxy";
 
 let DATE_RANGE_PICKER: string = "DateRangePicker";
 
+function isValidDate(d : any) {
+    return Object.prototype.toString.call(d) === "[object Date]" && !isNaN( d.getTime());
+}
+
+function onStartDatePropertyChanged(data: PropertyChangeData) {
+    let date = <Date>data.newValue;
+    // if (isValidDate(date)) {
+        let picker = <DateRangePicker>data.object;
+        // picker._setNativeStartDate(data.newValue);
+    // } else {
+        // throw new Error("Start date needs a valid date");
+    // }
+}
+
+function onEndDatePropertyChanged(data: PropertyChangeData) {
+    let date = <Date>data.newValue;
+    // if (isValidDate(date)) {
+        let picker = <DateRangePicker>data.object;
+        // picker._setNativeEndDate(data.newValue);
+    // } else {
+        // throw new Error("End date needs a valid date");
+    // }
+}
+
 export class DateRangePicker extends View implements DateRangePickerDefinition {
     
-    public static startDateProperty = new Property("startDate", DATE_RANGE_PICKER, new PropertyMetadata(new Date()));
-    public static endDateProperty = new Property("endDate", DATE_RANGE_PICKER, new PropertyMetadata(new Date()));
+    public static startDateProperty = new Property("startDate", DATE_RANGE_PICKER, new PropertyMetadata(new Date(), PropertyMetadataSettings.None, onStartDatePropertyChanged, isValidDate));
+    public static endDateProperty = new Property("endDate", DATE_RANGE_PICKER, new PropertyMetadata(new Date(), PropertyMetadataSettings.None, onEndDatePropertyChanged, isValidDate));
     public static maxDateProperty = new Property("maxDate", DATE_RANGE_PICKER, new PropertyMetadata(undefined));
     public static minDateProperty = new Property("minDate", DATE_RANGE_PICKER, new PropertyMetadata(undefined));
 
@@ -75,5 +99,13 @@ export class DateRangePicker extends View implements DateRangePickerDefinition {
     
     get selectionColor() {
         return this._getValue(DateRangePicker.selectionColorProperty);
+    }
+    
+    public _setNativeStartDate(date : Date) {
+        //
+    }
+    
+    public _setNativeEndDate(date: Date) {
+        //
     }
 }

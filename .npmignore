@@ -2,3 +2,5 @@ demo
 dsl-calendarview-common.ts
 dsl-calendarview.ios.ts
 .gitignore
+ScreenShot.png
+tsconfig.json

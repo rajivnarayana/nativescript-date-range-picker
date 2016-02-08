@@ -45,6 +45,15 @@ function onSelectionColorPropertyChanged(data: PropertyChangeData) {
 
 (<PropertyMetadata>DateRangePickerBase.selectionColorProperty.metadata).onSetNativeValue = onSelectionColorPropertyChanged;
 
+function onStartDatePropertyChanged(data: PropertyChangeData) {
+    let picker = <DateRangePicker>data.object;
+    if (picker.ios && data.newValue) {
+        picker._setNativeStartDate(data.newValue);
+    }
+}
+
+(<PropertyMetadata>DateRangePickerBase.startDateProperty.metadata).onSetNativeValue = onStartDatePropertyChanged;
+
 export class DateRangePicker extends DateRangePickerBase {
     
     private _ios: any;
@@ -86,6 +95,13 @@ export class DateRangePicker extends DateRangePickerBase {
     public notifyPositionCallout(dayView : any) {
         let args : EventData = {eventName : DateRangePickerBase.draggedToEvent, object: this, dayView:dayView };
         this.notify(args);
+    }
+    
+    public _setNativeStartDate(date : Date) : void {
+        console.log("_setNativeStartDate");
+        let startDateComponents = NSCalendar.currentCalendar().componentsFromDate(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSCalendarCalendarUnit | NSWeekdayCalendarUnit, NSDate.dateWithTimeIntervalSince1970(date.getTime()/1000.0));
+        let endDateComponents = NSCalendar.currentCalendar().componentsFromDate(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSCalendarCalendarUnit | NSWeekdayCalendarUnit, NSDate.dateWithTimeIntervalSince1970(this.endDate.getTime()/1000.0));
+        this.ios.selectedRange = DSLCalendarRange.alloc().initWithStartDayEndDay(startDateComponents, endDateComponents);
     }
 }
 

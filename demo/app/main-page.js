@@ -36,7 +36,7 @@ function getDisplay(date) {
 
 exports.onDateRangePickerLoaded = onDateRangePickerLoaded;
 exports.onUserDraggedTo = function(eventData) {
-    console.log(eventData.dayView);
+    // console.log(eventData.dayView);
 }
 
 exports.pageLoaded = onPageLoaded; 
